@@ -1,32 +1,29 @@
-group 'com.yg'
-version '1.0-SNAPSHOT'
 
 
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    sourceCompatibility = 1.8
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'Demo'
+    repositories {
+        mavenCentral()
     }
-}
 
-task runApp(type: JavaExec) {
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
 
-    classpath = sourceSets.main.runtimeClasspath
-
-    main = 'Demo'
-
-    // arguments to pass to the application
 
 }
-
-
-dependencies {
-
-    compile project(":math.wrpper")
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.2'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.2'
-
+task copyJars(type: Copy, dependsOn: subprojects.jar) {
+    from(subprojects.jar)
+    into project.file('dest')
 }
 
+task copyDeps(type: Copy) {
+    from(subprojects.configurations.runtime)
+    into project.file('dest/lib')
+}
 
+task copyFiles(dependsOn: [copyJars, copyDeps])
 

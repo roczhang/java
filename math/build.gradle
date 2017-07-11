@@ -1,0 +1,22 @@
+group 'com.yg'
+version '1.0-SNAPSHOT'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'myMath.MyMath'
+    }
+}
+
+dependencies {
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
+}
+
+
+task runApp(type: JavaExec) {
+
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'myMath.MyMath'
+}
+
