@@ -1,0 +1,6 @@
+rootProject.name = 'hello'
+include 'demo'
+include 'math'
+include 'math2'
+include 'math.wrpper'
+
